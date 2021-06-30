@@ -1,7 +1,6 @@
 const fs = require("fs").promises;
 const path = require("path");
 const { v4 } = require("uuid");
-
 const contactsPath = path.join(__dirname, "/db/contacts.json");
 
 async function listContacts() {
@@ -24,6 +23,7 @@ async function getContactById(contactId) {
     throw error;
   }
 }
+
 function removeContact(contactId) {
   try {
     const contacts = await listContacts();
