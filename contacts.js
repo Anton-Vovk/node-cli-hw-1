@@ -1,11 +1,11 @@
-const fs = require("fs").promises;
+const fs = require("fs/promises");
 const path = require("path");
 const { v4 } = require("uuid");
 const contactsPath = path.join(__dirname, "/db/contacts.json");
 
 async function listContacts() {
   try {
-    const data = await fs.readFile(contactsPath, "utf-8");
+    const data = await fs.readFile(contactsPath, "utf8");
     const contacts = JSON.parse(data);
     return contacts;
   } catch (error) {
@@ -17,18 +17,18 @@ async function getContactById(contactId) {
   try {
     const contacts = await listContacts();
     const findContact = contacts.find((item) => item.id === contactId);
-    if (!findContact) throw new Error("Id incorrect");
+    if (!findContact) throw new Error("Id incorrect!");
     return findContact;
   } catch (error) {
     throw error;
   }
 }
 
-function removeContact(contactId) {
+async function removeContact(contactId) {
   try {
     const contacts = await listContacts();
-    const index = contacts.findIndex((item) => item.id === item);
-    if (index === -1) throw new Error("Id incorrect");
+    const index = contacts.findIndex((item) => item.id === contactId);
+    if (index === -1) throw new Error("In incorrect!");
     const filteredContacts = contacts.filter((item) => item.id !== contactId);
     await fs.writeFile(contactsPath, JSON.stringify(filteredContacts));
     return contactId;
@@ -43,8 +43,8 @@ async function addContact(name, email, phone) {
     const id = v4();
     const newContact = { id, name, email, phone };
     const newContacts = [...contacts, newContact];
-    const str = JSON.stringify(newContacts);
-    await fs.writeFile(contactsPath, str);
+    const newContactsStr = JSON.stringify(newContacts);
+    await fs.writeFile(contactsPath, newContactsStr);
     return newContact;
   } catch (error) {
     throw error;

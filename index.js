@@ -9,10 +9,9 @@ program
   .option("-p, --phone <type>", "user phone");
 
 program.parse(process.argv);
-const options = program.opts();
-console.log(options);
+const argv = program.opts();
 
-function invokeAction({ action, id, name, email, phone }) {
+async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
       const contactList = await contacts.listContacts();
