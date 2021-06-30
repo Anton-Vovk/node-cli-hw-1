@@ -50,6 +50,7 @@ async function addContact(name, email, phone) {
     throw error;
   }
 }
+
 module.exports = {
   listContacts,
   getContactById,
